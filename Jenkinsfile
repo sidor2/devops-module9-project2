@@ -9,6 +9,10 @@ pipeline {
         maven 'maven-3.9'
     }
 
+    libraries {
+        lib('jenkins-shared-library')
+    }
+
     stages {
 
         stage("test") {
