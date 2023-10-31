@@ -27,7 +27,8 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    updateIncrementalVersionMaven()
+                    // updateIncrementalVersionMaven()
+                    updateVersionMaven "major"
                 }
             }
         }
@@ -49,10 +50,11 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    def dockerCmd = "docker run -d -p 8080:8080 --name myapp ilsoldier/devops:"
-                    sshagent(['ec2devopskey']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.185.51.167 ${dockerCmd}"
-                    }
+                    echo "Deploying the application..."
+                    // def dockerCmd = "docker run -d -p 8080:8080 --name myapp ilsoldier/devops:"
+                    // sshagent(['ec2devopskey']) {
+                    //     sh "ssh -o StrictHostKeyChecking=no ec2-user@54.185.51.167 ${dockerCmd}"
+                    // }
                 }
             }
         }
