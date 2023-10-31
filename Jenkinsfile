@@ -28,7 +28,13 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    mavenUpdateIncremental
+                    echo "Incrementing the version"
+                    sh "mvn build-helper:parse-version versions:set \
+                        -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                        -DnextSnapshot=true versions:commit"
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "$version-${env.BUILD_NUMBER}"
                 }
             }
         }
@@ -65,7 +71,7 @@ pipeline {
             steps {
                 script {
                     echo "Committing the version update..."
-                    // commitToGithub("2c40c606-3564-4fc4-8fc2-3a89a016f089","devops-module9-project2","starting-code")
+                    commitToGithub("2c40c606-3564-4fc4-8fc2-3a89a016f089","devops-module9-project2","starting-code")
                 }
             }
         }
