@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     echo "Incrementing the version"
-                    mavenUpdateIncremental
+                    tester
                     // sh "mvn build-helper:parse-version versions:set \
                     //     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                     //     -DnextSnapshot=true versions:commit"
