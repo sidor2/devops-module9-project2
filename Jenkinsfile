@@ -27,7 +27,7 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    echo "Incrementing the version..."
+                    updateIncrementalVersionMaven()
                 }
             }
         }
