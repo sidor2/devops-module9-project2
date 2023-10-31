@@ -1,12 +1,6 @@
 #!/usr/bin/env groovy
 @Library('jenkins-shared-library')
 
-// library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
-//     [$class: 'GitSCMSource',
-//      remote: 'git@github.com:sidor2/devops-module8-jenkins-shared-lib.git',
-//      credentialsId: '2c40c606-3564-4fc4-8fc2-3a89a016f089',
-//     ]
-// )
 
 pipeline {   
     agent any
@@ -16,6 +10,7 @@ pipeline {
     }
 
     stages {
+
         stage("test") {
             steps {
                 script {
@@ -24,6 +19,7 @@ pipeline {
                 }
             }
         }
+
         stage("increment version") {
             steps {
                 script {
@@ -31,6 +27,7 @@ pipeline {
                 }
             }
         }
+
         stage("build app") {
             steps {
                 script {
@@ -46,6 +43,7 @@ pipeline {
                 }
             }
         }
+
         stage("deploy") {
             steps {
                 script {
@@ -57,6 +55,7 @@ pipeline {
                 }
             }
         }
+
         stage("commit version update") {
             steps {
                 script {
