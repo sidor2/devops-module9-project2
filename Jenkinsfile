@@ -61,7 +61,7 @@ pipeline {
         stage("commit version update") {
             steps {
                 script {
-                    echo "Committing the version update..."
+                    commitToGithub("2c40c606-3564-4fc4-8fc2-3a89a016f089","devops-module9-project2","starting-code")
                 }
             }
         }
