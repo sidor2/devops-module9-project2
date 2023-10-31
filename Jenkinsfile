@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     // updateIncrementalVersionMaven()
-                    updateVersionMaven "major"
+                    updateVersionMaven('major')
                 }
             }
         }
