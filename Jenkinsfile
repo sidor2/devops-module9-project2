@@ -1,12 +1,12 @@
 #!/usr/bin/env groovy
-// @Library('jenkins-shared-library')
+@Library('jenkins-shared-library')
 
-library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
-    [$class: 'GitSCMSource',
-     remote: 'git@github.com:sidor2/devops-module8-jenkins-shared-lib.git',
-     credentialsId: '2c40c606-3564-4fc4-8fc2-3a89a016f089',
-    ]
-)
+// library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+//     [$class: 'GitSCMSource',
+//      remote: 'git@github.com:sidor2/devops-module8-jenkins-shared-lib.git',
+//      credentialsId: '2c40c606-3564-4fc4-8fc2-3a89a016f089',
+//     ]
+// )
 
 pipeline {   
     agent any
@@ -60,7 +60,8 @@ pipeline {
         stage("commit version update") {
             steps {
                 script {
-                    commitToGithub("2c40c606-3564-4fc4-8fc2-3a89a016f089","devops-module9-project2","starting-code")
+                    echo "Committing the version update..."
+                    // commitToGithub("2c40c606-3564-4fc4-8fc2-3a89a016f089","devops-module9-project2","starting-code")
                 }
             }
         }
