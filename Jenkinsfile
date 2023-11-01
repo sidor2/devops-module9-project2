@@ -72,7 +72,7 @@ pipeline {
                      groovy.lang.GString shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
                      def ec2Instance = "ec2-user@54.149.123.123"
 
-                     sshagent(['ec2-server-key']) {
+                     sshagent(['ec2devopskey']) {
                          sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
                          sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
                          sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
