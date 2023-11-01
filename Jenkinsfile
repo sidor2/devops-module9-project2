@@ -29,13 +29,12 @@ pipeline {
             steps {
                 script {
                     echo "Incrementing the version"
-                    tester
-                    // sh "mvn build-helper:parse-version versions:set \
-                    //     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
-                    //     -DnextSnapshot=true versions:commit"
-                    // def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    // def version = matcher[0][1]
-                    // env.IMAGE_NAME = "$version-${env.BUILD_NUMBER}"
+                     sh "mvn build-helper:parse-version versions:set \
+                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                         -DnextSnapshot=true versions:commit"
+                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                     def version = matcher[0][1]
+                     env.IMAGE_NAME = "ilsoldier/devops:$version-${env.BUILD_NUMBER}"
                 }
             }
         }
@@ -44,6 +43,7 @@ pipeline {
             steps {
                 script {
                     echo "Building the application..."
+                    buildJar()
                 }
             }
         }
@@ -52,6 +52,9 @@ pipeline {
             steps {
                 script {
                     echo "Building the docker image..."
+                    buildImage(env.IMAGE_NAME)
+                    dockerLogin()
+                    dockerPush(env.IMAGE_NAME)
                 }
             }
         }
@@ -60,10 +63,10 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
-                    // def dockerCmd = "docker run -d -p 8080:8080 --name myapp ilsoldier/devops:"
-                    // sshagent(['ec2devopskey']) {
-                    //     sh "ssh -o StrictHostKeyChecking=no ec2-user@54.185.51.167 ${dockerCmd}"
-                    // }
+                     groovy.lang.GString dockerCmd = "docker run -d -p 8080:8080 --name myapp ${env.IMAGE_NAME}"
+                     sshagent(['ec2devopskey']) {
+                         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.149.123.123 ${dockerCmd}"
+                     }
                 }
             }
         }
