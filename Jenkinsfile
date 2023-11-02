@@ -70,7 +70,7 @@ pipeline {
                      echo 'deploying docker image to EC2...'
 
                      groovy.lang.GString shellCmd = "bash ./server-cmds.sh ${env.IMAGE_NAME}"
-                     def ec2Instance = "ec2-user@54.149.123.123"
+                     def ec2Instance = "ec2-user@10.0.11.221"
 
                      sshagent(['ec2devopskey']) {
                          sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
